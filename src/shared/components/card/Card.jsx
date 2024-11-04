@@ -1,13 +1,14 @@
-import { Box, Card, CardActionArea, Typography } from "@mui/material"
+import PropTypes from "prop-types"
+import { Box, Card, Typography } from "@mui/material"
 import { CircledIconButton } from "../button/Button"
-import { Delete, DeleteRounded, Edit, EditRounded } from "@mui/icons-material"
+import { Delete } from "@mui/icons-material"
 
-export const ClickableCard = ({ content, color }) => {
+export const ClickableCard = ({ data, handleUpdate, handleDelete }) => {
     return (
         <Card
             elevation={0}
             sx={{
-                bgcolor: color,
+                bgcolor: data.color,
                 width: 205,
                 height: 195,
                 borderRadius: "12px",
@@ -17,9 +18,13 @@ export const ClickableCard = ({ content, color }) => {
                     boxShadow: "0 4px 20px 0 rgba(0,0,0,0.12)",
                     transform: "scale(1.04)",
                 },
+                cursor: "pointer"
+            }}
+            onClick={() => {
+                handleUpdate(data.id)
             }}
         >
-            <CardActionArea 
+            <Box 
                 sx={{ 
                     width: 205,
                     height: 195,    
@@ -38,16 +43,29 @@ export const ClickableCard = ({ content, color }) => {
                         WebkitLineClamp: 6,  // Limit to 6 lines
                         WebkitBoxOrient: 'vertical',
                         textOverflow: 'ellipsis',
+                        whiteSpace: "pre-line"
                     }}
                 >
-                    {content}
+                    {data.content}
                 </Typography>
                 <Box height="40px" width="100%" display="flex" alignItems="flex-end">
-                    <Typography variant="caption" flex={1}>20 Jan 2024</Typography>
-                    <CircledIconButton Icon={Edit} buttonStyle={{ width: "24px", height: "24px", mr: "4px" }} iconStyle={{ fontSize: "16px" }}/>
-                    <CircledIconButton Icon={Delete} buttonStyle={{ width: "24px", height: "24px" }} iconStyle={{ fontSize: "16px" }}/>
+                    <Typography variant="caption" flex={1}>{data.updated_at}</Typography>
+                    <CircledIconButton handleClick={(event) => {
+                            event.stopPropagation()
+                            handleDelete(data.id)
+                        }} 
+                        Icon={Delete} 
+                        buttonStyle={{ width: "24px", height: "24px" }} 
+                        iconStyle={{ fontSize: "16px" }}
+                    />
                 </Box>
-            </CardActionArea>
+            </Box>
         </Card>
     )
+}
+
+ClickableCard.propTypes = {
+  data: PropTypes.object,
+  handleDelete: PropTypes.func,
+  handleUpdate: PropTypes.func
 }
