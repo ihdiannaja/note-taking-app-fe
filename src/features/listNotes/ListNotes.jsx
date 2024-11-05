@@ -13,7 +13,7 @@ export const ListNotes = ({ isLoading, datas=[], handleDelete, handleUpdate }) =
         ) : datas.length === 0 ? (
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", gap: "8px" }}>
                 <SentimentSatisfiedRounded/>
-                <Typography>Notes are empty. You can add one!</Typography>
+                <Typography>No notes yet. Add one to get started!</Typography>
             </Box>
         ) : (
             datas.map((data, i) => (
